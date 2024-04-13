@@ -28,8 +28,7 @@ const port = process.env.PORT || 7000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
-// app.use(express.static(path.join(__dirname, 'build')));
-app.use(express.static('./build/index.html'));
+app.use(express.static(path.join(__dirname, 'build/index.html')));
 // Router middleware!
 app.use('/api/documents', documentRoutes);
 app.use('/api/users', authRoutes); 
@@ -41,8 +40,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 // Route all requests to the index.html file
 app.get('/*', (req, res) => {
-//   res.sendFile(path.join('./build', 'index.html'));
-  res.sendFile('./build/index.html');
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // Listening for a port for server!
