@@ -15,11 +15,11 @@ const fileSchema = new mongoose.Schema({
     starredBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
-fileSchema.methods.remove = function () {
-    // Your custom remove logic here
-    // For example, to remove the document from the database
-    return this.model('File').deleteOne({ _id: this._id });
-};
+// fileSchema.methods.remove = function () {
+//     // Your custom remove logic here
+//     // For example, to remove the document from the database
+//     return this.model('File').deleteOne({ _id: this._id });
+// };
 
 const File = mongoose.model("File", fileSchema);
 

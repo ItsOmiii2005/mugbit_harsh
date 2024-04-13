@@ -1,12 +1,12 @@
 
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const mongoose = require("mongoose");
 
 // Connecting to the database
 // Connected to mongodb
-mongoose.connect("mongodb+srv://harsh:h1h2h3h4h5h6h7@cluster0.0jmtyiz.mongodb.net/pymongo?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://om:omiii@atlascluster.zo09joq.mongodb.net/mugbit?retryWrites=true&w=majority").
+then(()=> console.log("connected")).catch((e)=> console.log(e))
 
 // Signup controller goes here..
 const signup = async (req, res) => {
@@ -23,15 +23,15 @@ const signup = async (req, res) => {
         }
 
         // hashing the password
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        // const saltRounds = 10;
+        // const hashedPassword = await bcrypt.hash(password, saltRounds);
 
 
         // Now, create a new user
         const newUser = new User({
             username,
             email: useremail,
-            password: hashedPassword,
+            password: password,
             image
         });
 
@@ -64,13 +64,13 @@ const login = async (req, res) => {
         }
 
         // Check if the password is correct
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        // const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        if (!isPasswordValid) {
+        if (!password == user.password) {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
-        const imageUrl = user.image ? `http://localhost:7000/uploads/images/${user.image}` : null;
+        const imageUrl = user.image ? `/uploads/images/${user.image}` : null;
 
         // Create a JWT Token
         const secretKey = process.env.JWT_SECRET || "defaultSecretKey";
@@ -133,7 +133,7 @@ const updateProfilePicture = async (req, res) => {
         );
 
         // Respond with the updated user information
-        const imageUrl = updatedUser.image ? `http://localhost:7000/uploads/images/${updatedUser.image}` : null;
+        const imageUrl = updatedUser.image ? `/uploads/images/${updatedUser.image}` : null;
         res.status(200).json({ user: { userId: user._id, username: updatedUser.username, email: updatedUser.email, userimg: imageUrl } });
     } catch (error) {
         console.error('Error during profile picture update:', error);

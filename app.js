@@ -21,7 +21,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 // Port is defined here..
-const port = 7000;
+const port = process.env.PORT || 7000;
 
 // All middlewares are used in this section..
 // app.use(express.json());
@@ -39,7 +39,7 @@ app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 
-  
+
 // Listening for a port for server!
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
