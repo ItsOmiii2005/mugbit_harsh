@@ -28,16 +28,20 @@ const port = process.env.PORT || 7000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
-app.use(express.static(path.join(__dirname, 'build')));
+// app.use(express.static(path.join(__dirname, 'build')));
 // Router middleware!
 app.use('/api/documents', documentRoutes);
 app.use('/api/users', authRoutes); 
 
 
 
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
+// Serve static files from the 'build' folder
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Route all requests to the index.html file
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 
 // Listening for a port for server!
