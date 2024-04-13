@@ -28,11 +28,18 @@ const port = 7000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/uploads/images', express.static(path.join(__dirname, 'uploads/images')));
-
+app.use(express.static(path.join(__dirname, 'build')));
 // Router middleware!
 app.use('/api/documents', documentRoutes);
 app.use('/api/users', authRoutes); 
 
+
+
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
+
+  
 // Listening for a port for server!
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
